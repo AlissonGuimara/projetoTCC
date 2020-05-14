@@ -1,0 +1,3 @@
+rootProject.name='testeRasp'
+include ':raspberry'
+include ':phone'
