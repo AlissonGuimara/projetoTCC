@@ -28,6 +28,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinner_IdTalhao">
+                </Spinner>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/corTexto"
+                    android:textSize="15dp"
+                    android:text="Data: "
+                    android:layout_marginLeft="10dp">
+                </TextView>
+                <EditText
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:id="@+id/text_data_talha">
+                </EditText>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/corTexto"
+                    android:textSize="15dp"
+                    android:text="Hora: "
+                    android:layout_marginLeft="10dp">
+                </TextView>
+                <EditText
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:id="@+id/text_hora_talhao">
+                </EditText>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -55,11 +99,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginLeft="30dp">
-                    <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spinner_IdTalhao">
-                    </Spinner>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -167,7 +206,6 @@
 
 
                 </LinearLayout>
-
 
             </LinearLayout>
 

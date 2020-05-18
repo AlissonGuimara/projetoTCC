@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,6 +15,9 @@ import com.example.phone.R;
 import com.example.phone.firebase.LerDados;
 import com.example.phone.metodos.DadosApp;
 import com.example.phone.metodos.DadosSensor;
+import com.example.phone.metodos.Talhao;
+
+import java.util.ArrayList;
 
 public class RelatorioActivity extends Activity {
 
@@ -33,6 +37,8 @@ public class RelatorioActivity extends Activity {
 
     DadosApp dadosApp = new DadosApp();
     DadosSensor dadosSensor = new DadosSensor();
+    LerDados lerDados = new LerDados();
+    Talhao talhao = new Talhao();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +48,7 @@ public class RelatorioActivity extends Activity {
 
     //implementa todos os relatorios da view
     public void Relatorio() {
+        lerDados.lerNomeTalhao();
 
         umidadeTermometro = findViewById(R.id.texto_umidade_termometro);
         termometro = findViewById(R.id.view_termometro);
@@ -52,7 +59,15 @@ public class RelatorioActivity extends Activity {
         textoPpm = findViewById(R.id.text_ppm);
         textoStatus = findViewById(R.id.text_status);
 
-        //implemetar o spinner;
+        ArrayAdapter adapter = new ArrayAdapter (this, android.R.layout.simple_spinner_item, talhao.getNomeList());
+        spinnerTalhao.setAdapter(adapter);
+
+        if (spinnerTalhao.getSelectedItem()!=null){
+            Log.e("key", "key" + spinnerTalhao.getSelectedItem());
+
+        }
+
+        //spinnerTalhao.getSelectedItem().toString();
 
         /*
         data = findViewById(R.id.texto_data);
