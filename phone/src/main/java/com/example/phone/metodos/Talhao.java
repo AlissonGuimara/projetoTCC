@@ -10,26 +10,15 @@ public class Talhao {
     public static String ppm;
     public static String cc;
     public static String area;
-
-    public static ArrayList<String> idList = new ArrayList<>();
     public static ArrayList<String> nomeList = new ArrayList<>();
 
-
-    public ArrayList<String> getIdList() {
-        return idList;
-    }
-
-    public void setIdList(ArrayList<String> idList) {
-        Talhao.idList = idList;
-    }
 
     public ArrayList<String> getNomeList() {
         return nomeList;
     }
 
-    public void setNomeList(ArrayList<String> nomeList, ArrayList<String> Id) {
+    public void setNomeList(ArrayList<String> nomeList) {
         this.nomeList = nomeList;
-        idList = Id;
     }
 
     public Talhao() {

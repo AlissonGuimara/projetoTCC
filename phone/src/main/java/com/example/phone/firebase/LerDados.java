@@ -151,7 +151,7 @@ public class LerDados{
     }
 
     public void lerNomeTalhao(){
-        ArrayList<Talhao> ta = new ArrayList<>();
+
         DatabaseReference firebaseReferencia = FirebaseDatabase.getInstance().getReference();
         DatabaseReference nomeReferencia = firebaseReferencia.child("talhao").child("id");
 
@@ -160,11 +160,8 @@ public class LerDados{
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     for(DataSnapshot s : dataSnapshot.getChildren()){
-                        nome.add(s.child("nome").getValue().toString());
-                        id.add(s.getKey());
-                        talhao.setNomeList(nome, id);
-
-
+                        nome.add(s.getKey() + " " + s.child("nome").getValue().toString());
+                        talhao.setNomeList(nome);
                     }
                 }
             }

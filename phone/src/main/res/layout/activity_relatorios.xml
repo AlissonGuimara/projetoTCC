@@ -46,7 +46,7 @@
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:textSize="15dp"
-                    android:id="@+id/text_data_talha">
+                    android:id="@+id/text_data_talhao">
                 </EditText>
 
                 <TextView
@@ -99,6 +99,27 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginLeft="30dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Area: "
+                            android:textColor="@color/corTexto"
+                            android:textSize="18dp">
+                        </TextView>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/text_area"
+                            android:textColor="@color/corTexto"
+                            android:textSize="18dp">
+                        </TextView>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -208,6 +229,18 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+          <Button
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Verificar Sensor"
+              android:textColor="@color/corTextoBotao"
+              android:background="@color/corBotao"
+              android:layout_marginLeft="8dp"
+              android:layout_marginRight="8dp"
+              android:id="@+id/botao_relatorio_talhao">
+
+          </Button>
 
         </LinearLayout>
 
