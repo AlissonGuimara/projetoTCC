@@ -40,13 +40,16 @@
                     android:textColor="@color/corTexto"
                     android:textSize="15dp"
                     android:text="Data: "
-                    android:layout_marginLeft="10dp">
+                    android:layout_marginLeft="10dp"
+                    >
                 </TextView>
                 <EditText
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:textSize="15dp"
-                    android:id="@+id/text_data_talhao">
+                    android:id="@+id/text_data_talhao"
+                    android:clickable="true"
+                    android:inputType="date">
                 </EditText>
 
                 <TextView
@@ -99,6 +102,28 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginLeft="30dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Planta: "
+                            android:textColor="@color/corTexto"
+                            android:textSize="18dp">
+                        </TextView>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/text_planta"
+                            android:textColor="@color/corTexto"
+                            android:textSize="18dp">
+                        </TextView>
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"

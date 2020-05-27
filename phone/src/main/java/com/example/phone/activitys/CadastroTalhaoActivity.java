@@ -18,6 +18,7 @@ public class CadastroTalhaoActivity extends Activity {
     private EditText area;
     private EditText ppm;
     private EditText cc;
+    private EditText densidade;
     private Button cadastrar;
     private Button voltar;
 
@@ -34,6 +35,7 @@ public class CadastroTalhaoActivity extends Activity {
         area = findViewById(R.id.texto_areaCadastrar);
         ppm = findViewById(R.id.texto_ppmCadastrar);
         cc = findViewById(R.id.texto_ccCadastrar);
+        densidade = findViewById(R.id.texto_densidade);
         cadastrar = findViewById(R.id.botao_cadastrar);
         voltar = findViewById(R.id.botao_voltar);
 
@@ -48,8 +50,9 @@ public class CadastroTalhaoActivity extends Activity {
                 talhao.setId(id.getText().toString());
                 talhao.setNome(nome.getText().toString());
                 talhao.setPpm(ppm.getText().toString());
-                salvarDadosPhone.Salvar(talhao.getArea(), talhao.getCc(), talhao.getId(), talhao.getNome(),
-                talhao.getPpm());
+                talhao.setDensidade(densidade.getText().toString());
+                salvarDadosPhone.SalvarTalhao(talhao.getArea(), talhao.getCc(), talhao.getId(), talhao.getNome(),
+                talhao.getPpm(), talhao.getDensidade());
 
                 Intent intent = new Intent(CadastroTalhaoActivity.this, MainActivity.class);
                 startActivity(intent);

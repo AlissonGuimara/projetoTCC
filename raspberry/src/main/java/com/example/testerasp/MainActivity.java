@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import com.example.testerasp.apiAdvisor.LerPrevisao;
 import com.example.testerasp.sensores.Adc0832;
 
 import java.io.IOException;
@@ -20,6 +21,9 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        LerPrevisao lerPrevisao = new LerPrevisao();
+        lerPrevisao.previsao();
 
         //set up mAdc0832
         try {

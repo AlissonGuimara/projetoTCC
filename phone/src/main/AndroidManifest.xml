@@ -18,6 +18,7 @@
 
         <activity android:name=".activitys.RelatorioActivity"></activity>
         <activity android:name=".activitys.CadastroTalhaoActivity"></activity>
+        <activity android:name=".activitys.PlantaActivity"></activity>
     </application>
 
 </manifest>

@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.phone.metodos.DadosSensor;
+import com.example.phone.metodos.Planta;
 import com.example.phone.metodos.Talhao;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -13,12 +14,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class LerDados{
 
     DadosSensor dadosSensor = new DadosSensor();
     Talhao talhao = new Talhao();
+    Planta planta = new Planta();
     ArrayList<String> nome = new ArrayList<>();
     ArrayList<String> id = new ArrayList<>();
 
@@ -165,6 +166,39 @@ public class LerDados{
                     }
                 }
             }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void lerNomePlanta(String id){
+        DatabaseReference firebaseReferencia = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference nomePlantaReferencia = firebaseReferencia.child("planta").child("id_talhao").child(id).child("nome");
+        DatabaseReference profundidadeReferencia = firebaseReferencia.child("planta").child("id_talhao").child(id).child("profundidade_raiz");
+        nomePlantaReferencia.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                        planta.setNome(dataSnapshot.getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        profundidadeReferencia.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    planta.setProfundidade_raiz(Integer.parseInt(dataSnapshot.getValue().toString()));
+                }
+            }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

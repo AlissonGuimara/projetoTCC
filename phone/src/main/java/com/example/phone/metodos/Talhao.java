@@ -1,7 +1,6 @@
 package com.example.phone.metodos;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Talhao {
 
@@ -10,6 +9,8 @@ public class Talhao {
     public static String ppm;
     public static String cc;
     public static String area;
+    public static String densidade;
+
     public static ArrayList<String> nomeList = new ArrayList<>();
 
 
@@ -22,6 +23,14 @@ public class Talhao {
     }
 
     public Talhao() {
+    }
+
+    public String getDensidade() {
+        return densidade;
+    }
+
+    public void setDensidade(String densidade) {
+        Talhao.densidade = densidade;
     }
 
     public String getId() {

@@ -30,6 +30,19 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cadastrar planta"
+            android:textSize="20dp"
+            android:id="@+id/botao_cadastro_planta">
+        </Button>
+    </LinearLayout>
+
 
 
 

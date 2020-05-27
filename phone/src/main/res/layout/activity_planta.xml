@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cadastrar Plantas"
+        android:textSize="25dp"
+        android:textAlignment="center"
+        android:padding="8dp"
+        android:textColor="@color/corTextoBotao"
+        android:background="@color/corFundoTextview"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_IdTalhao_planta">
+        </Spinner>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nome: "
+                android:textColor="@color/corTexto"
+                android:textSize="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="5dp">
+            </TextView>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/corTexto"
+                android:textSize="20dp"
+                android:id="@+id/text_nome_planta">
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profundidade das raizes: "
+                android:textColor="@color/corTexto"
+                android:textSize="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="5dp">
+            </TextView>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/corTexto"
+                android:textSize="20dp"
+                android:id="@+id/text_profundidade">
+            </EditText>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cadastrar Planta"
+            android:textColor="@color/corTextoBotao"
+            android:background="@color/corBotao"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="100dp"
+            android:id="@+id/botao_cadastrar_planta">
+        </Button>
+    </LinearLayout>
+
+</LinearLayout>

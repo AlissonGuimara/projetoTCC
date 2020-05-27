@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.phone.R;
 import com.example.phone.firebase.LerDados;
 import com.example.phone.metodos.DadosSensor;
+import com.example.phone.metodos.Planta;
 import com.example.phone.metodos.Talhao;
 
 import java.util.Calendar;
@@ -34,11 +35,14 @@ public class RelatorioActivity extends Activity {
     private TextView textoPpm;
     private TextView textoStatus;
     private TextView area;
+    private TextView nomePlanta;
 
     DadosSensor dadosSensor = new DadosSensor();
     LerDados lerDados = new LerDados();
     Talhao talhao = new Talhao();
     GregorianCalendar gc = new GregorianCalendar();
+    Calendar myCalendar = Calendar.getInstance();
+    Planta planta = new Planta();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,10 +58,18 @@ public class RelatorioActivity extends Activity {
         textoCc = findViewById(R.id.text_cc);
         textoPpm = findViewById(R.id.text_ppm);
         textoStatus = findViewById(R.id.text_status);
+        nomePlanta = findViewById(R.id.text_planta);
         area = findViewById(R.id.text_area);
+        data = findViewById(R.id.text_data_talhao);
+        String horaAtual = "17"; //gc.get(Calendar.HOUR_OF_DAY);
+        hora = findViewById(R.id.text_hora_talhao);
+        hora.setText(horaAtual);
+
+        //EditText editTextFromDate = findViewById(R.id.text_data_talhao);
+        //setDate fromDate = new setDate(data, this);
 
         //insere no view a data e a hora atual
-        String horaAtual = "17"; //gc.get(Calendar.HOUR_OF_DAY);
+        //String horaAtual = "17"; //gc.get(Calendar.HOUR_OF_DAY);
         int dia = gc.get(Calendar.DAY_OF_MONTH);
         int mes = gc.get(Calendar.MONTH);
         int ano = gc.get(Calendar.YEAR);
@@ -66,6 +78,7 @@ public class RelatorioActivity extends Activity {
         data.setText(dataAtual);
         hora = findViewById(R.id.text_hora_talhao);
         hora.setText(horaAtual);
+
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, talhao.getNomeList());
         spinnerTalhao.setAdapter(adapter);
@@ -82,14 +95,15 @@ public class RelatorioActivity extends Activity {
             String idString = (String) spinnerTalhao.getSelectedItem();
             String[] id2 = idString.split(" ");
             lerDados.ler(data.getText().toString(), hora.getText().toString(), id2[0]);
+            lerDados.lerNomePlanta(id2[0]);
         }
 
         relatorioTalhao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //chama o relatório novamente, pois pode ser inserido outra data e/ou hora
 
                 umidadeTermometro.setText("Umidade: " + dadosSensor.getUmidade());
+                nomePlanta.setText(planta.getNome());
                 textoNome.setText(talhao.getNome());
                 textoUmidade.setText(dadosSensor.getUmidade().toString());
                 textoCc.setText(talhao.getCc());
@@ -108,6 +122,7 @@ public class RelatorioActivity extends Activity {
                     termometro.setImageResource(R.drawable.umidade_baixa);
                 }
 
+                //chama o relatório novamente, pois pode ser inserido outra data e/ou hora
                 Relatorio();
             }
         });
