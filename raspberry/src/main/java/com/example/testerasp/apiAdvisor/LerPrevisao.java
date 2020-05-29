@@ -1,10 +1,6 @@
 package com.example.testerasp.apiAdvisor;
 
-import android.app.Activity;
-import android.os.Bundle;
 import android.util.Log;
-
-import com.example.testerasp.R;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -12,50 +8,45 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LerPrevisao extends Activity {
+public class LerPrevisao {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        previsao();
-    }
+    private Double precipitacao = null;
 
-    public void previsao() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiInterface.BASE_URL).addConverterFactory(GsonConverterFactory.
-                create()).build();
+    // método que le a previsão do tempo para 3 dias
+        public Double  previsao() {
 
-        ApiInterface service = retrofit.create(ApiInterface.class);
+                final Retrofit[] retrofit = {new Retrofit.Builder().baseUrl(ApiInterface.BASE_URL).addConverterFactory(GsonConverterFactory.
+                        create()).build()};
 
-        Call<classeData> requestResposta = service.lista();
+                ApiInterface service = retrofit[0].create(ApiInterface.class);
+                Call<classeData> requestResposta = service.lista();
 
-        requestResposta.enqueue(new Callback<classeData>() {
-            @Override
-            public void onResponse(Call<classeData> call, Response<classeData> response) {
-                //Datas d = new Datas();
+                requestResposta.enqueue(new Callback<classeData>() {
+                    @Override
+                    public void onResponse(Call<classeData> call, Response<classeData> response) {
+                        Double soma = 0.0;
 
-                if (!response.isSuccessful()) {
-                    Log.e("ERRO", "erro" + response.code());
-                } else {
-                    classeData resp = response.body();
-                    for (Datas d : resp.data) {
-                        Log.e("CERTO", "data: " + d.date);
-                        Log.e("CERTO", "chuva: " + d.getRain().getPrecipitation());
-                        Log.e("CERTO", "CERTO" + "-----------");
+                        if (!response.isSuccessful()) {
+                            Log.e("ERRO", "erro" + response.code());
+                        } else {
+                            classeData resp = response.body();
 
-                        //for (Chuva  c: d.) {
-                        //Log.e("CERTO", "CERTO" + c.precipitation);
-                        //}
+                            for (Datas d : resp.data) {
+                                soma += Double.parseDouble(d.getRain().getPrecipitation().toString());
+                                Log.e("CERTO", "data: " + d.date);
+                                Log.e("CERTO", "chuva: " + d.getRain().getPrecipitation());
+                                Log.e("CERTO", "CERTO" + "-----------");
+                            }
+                            precipitacao = soma;
+                            Log.e("CERTO", "soma1" + "-----------" + precipitacao);
+                        }
                     }
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<classeData> call, Throwable t) {
-                Log.e("ERRO", "erro" + t.getMessage() + " aaaaa " + t.getStackTrace());
-            }
-        });
+                    @Override
+                    public void onFailure(Call<classeData> call, Throwable t) {
+                        Log.e("ERRO", "erro" + t.getMessage() + " aaaaa " + t.getStackTrace());
+                    }
+                });
+                return precipitacao;
+        }
     }
-}
 
