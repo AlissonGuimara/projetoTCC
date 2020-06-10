@@ -33,9 +33,9 @@ public class LerPrevisao {
 
                             for (Datas d : resp.data) {
                                 soma += Double.parseDouble(d.getRain().getPrecipitation().toString());
-                                Log.e("CERTO", "data: " + d.date);
-                                Log.e("CERTO", "chuva: " + d.getRain().getPrecipitation());
-                                Log.e("CERTO", "CERTO" + "-----------");
+                                //Log.e("CERTO", "data: " + d.date);
+                                //Log.e("CERTO", "chuva: " + d.getRain().getPrecipitation());
+                                //Log.e("CERTO", "CERTO" + "-----------");
                             }
                             precipitacao = soma;
                             Log.e("CERTO", "soma1" + "-----------" + precipitacao);
@@ -49,4 +49,3 @@ public class LerPrevisao {
                 return precipitacao;
         }
     }
-

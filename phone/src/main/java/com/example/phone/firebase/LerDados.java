@@ -21,7 +21,8 @@ public class LerDados{
     Talhao talhao = new Talhao();
     Planta planta = new Planta();
     ArrayList<String> nome = new ArrayList<>();
-    ArrayList<String> id = new ArrayList<>();
+    ArrayList<String> datas = new ArrayList<>();
+    ArrayList<Double> somas = new ArrayList<>();
 
     //cria as referencias ao firebase
     public void ler(String data, String hora, String id) {
@@ -45,7 +46,7 @@ public class LerDados{
         dataReferencia.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.e("firebase", dataSnapshot.getValue().toString());
+                //Log.e("firebase", dataSnapshot.getValue().toString());
 
             }
 
@@ -59,7 +60,7 @@ public class LerDados{
         qntdAguaReferencia.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dadosSensor.setQntd_agua(Integer.parseInt(dataSnapshot.getValue().toString()));
+                dadosSensor.setQntd_agua(Double.parseDouble(dataSnapshot.getValue().toString()));
                 Log.e("agua", "---" + dadosSensor.getQntd_agua());
 
             }
@@ -197,6 +198,39 @@ public class LerDados{
                 if(dataSnapshot.exists()){
                     planta.setProfundidade_raiz(Integer.parseInt(dataSnapshot.getValue().toString()));
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void lerGastoAgua(String id, final String data){
+
+        DatabaseReference firebaseReferencia = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference dataReferencia = firebaseReferencia.child("sensor").child("id_talhao").child("1").child("data")
+                .child(data).child("hora");
+
+        dataReferencia.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Double soma = 0.0;
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot s: dataSnapshot.getChildren()){
+                        soma = soma + Double.parseDouble(s.child("qntd_agua").getValue().toString());
+                }
+                    datas.add(data);
+                    somas.add(soma);
+
+                    //le a data e a qntd de agua, para depois ler no relatorio//
+                    dadosSensor.setDataList(datas);
+                    dadosSensor.setQntdAguaList(somas);
+                    //Log.e("quantidade agua", data + "--" + soma);
+                    //Log.e("quantidade agua", String.valueOf(datas) + "--"+ somas);
+            }
+
             }
 
             @Override

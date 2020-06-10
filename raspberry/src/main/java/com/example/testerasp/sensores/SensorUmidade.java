@@ -13,6 +13,7 @@ public class SensorUmidade extends Activity {
 
     private Adc0832 mAdc0832 = new Adc0832();
     private Handler mHandler;
+    private int umidade;
 
     public SensorUmidade() throws IOException {
     }
@@ -33,7 +34,6 @@ public class SensorUmidade extends Activity {
         }
         readAnalogData();
         mHandler = new Handler();
-
     }
 
     @Override
@@ -50,13 +50,14 @@ public class SensorUmidade extends Activity {
             }
         });
         myThread.start();
+
     }
 
     private void readValueAndLog() {
-        //for (int i = 0; i < 10; i++) {
         try {
             final int a = mAdc0832.getADCChannelValue(Adc0832.CHANNEL_0);
-            Log.d("Sensor: ", a + " - ");
+            Log.e("Sensor: ", a + " - ");
+            setUmidade(a);
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -72,6 +73,14 @@ public class SensorUmidade extends Activity {
 
         //esta linha faz o sensor ficar em loop lendo a umidade
         //readAnalogData();
+    }
+
+    public int getUmidade() {
+        return umidade;
+    }
+
+    public void setUmidade(int umidade) {
+        this.umidade = umidade;
     }
 
 }
