@@ -1,6 +1,8 @@
 package com.example.phone.activitys;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,15 +34,18 @@ public class RelatorioActivity extends Activity {
     private EditText data;
     private EditText hora;
     private Button relatorioTalhao;
+    private Button relatorioGastoAgua;
     private TextView umidadeTermometro;
     private ImageView termometro;
     private Spinner spinnerTalhao;
+    private Spinner spinnerAgua;
     private TextView textoNome;
     private TextView textoCc;
     private TextView textoPpm;
     private TextView textoStatus;
     private TextView area;
     private TextView nomePlanta;
+    private AlertDialog alerta;
 
     DadosSensor dadosSensor = new DadosSensor();
     LerDados lerDados = new LerDados();
@@ -52,10 +57,12 @@ public class RelatorioActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relatorios);
-
         lerDados.lerNomeTalhao();
+
         spinnerTalhao = findViewById(R.id.spinner_IdTalhao);
+        spinnerAgua = findViewById(R.id.spinner_qntdAgua);
         relatorioTalhao = findViewById(R.id.botao_relatorio_talhao);
+        relatorioGastoAgua = findViewById(R.id.botao_relatorio_agua);
         umidadeTermometro = findViewById(R.id.texto_umidade_termometro);
         termometro = findViewById(R.id.view_termometro);
         textoNome = findViewById(R.id.text_nome);
@@ -64,10 +71,6 @@ public class RelatorioActivity extends Activity {
         textoStatus = findViewById(R.id.text_status);
         nomePlanta = findViewById(R.id.text_planta);
         area = findViewById(R.id.text_area);
-        data = findViewById(R.id.text_data_talhao);
-        String horaAtual = "17"; //gc.get(Calendar.HOUR_OF_DAY);
-        hora = findViewById(R.id.text_hora_talhao);
-        hora.setText(horaAtual);
 
         // data/hora atual
         LocalDateTime agora = LocalDateTime.now();
@@ -81,14 +84,19 @@ public class RelatorioActivity extends Activity {
         String horaFormatada = formatterHora.format(agora);
 
         data = findViewById(R.id.text_data_talhao);
-        data.setText("04-06-2020");
+        data.setText(dataFormatada);
         hora = findViewById(R.id.text_hora_talhao);
-        hora.setText("17");
+        hora.setText(horaFormatada);
 
-            ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, talhao.getNomeList());
-            spinnerTalhao.setAdapter(adapter);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, talhao.getNomeList());
+        spinnerTalhao.setAdapter(adapter);
 
-            Relatorio();
+        String spinnerArray[] = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerArray);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAgua.setAdapter(spinnerAdapter);
+
+        Relatorio();
 
     }
 
@@ -96,7 +104,6 @@ public class RelatorioActivity extends Activity {
     public void Relatorio() {
 
         //verifica se o item selecionado não é nulo
-
         if (spinnerTalhao.getSelectedItem() != null) {
             String idString = (String) spinnerTalhao.getSelectedItem();
             String[] id2 = idString.split(" ");
@@ -104,23 +111,17 @@ public class RelatorioActivity extends Activity {
             lerDados.lerNomePlanta(id2[0]);
         }
 
-            // Implementa o método do click do botão
-            relatorioTalhao.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        // Implementa o método do click do botão
+        relatorioTalhao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                    for (int dia = 1; dia <= 31; dia++) {
-                        if (dia < 10) {
-                            String data = "0" + dia + "-06-2020";
-                            lerDados.lerGastoAgua("1", data);
-                        } else {
-                            String data = dia + "-06-2020";
-                            lerDados.lerGastoAgua("1", data);
-                        }
-
-                    }
-
-                    umidadeTermometro.setText("Umidade: " + dadosSensor.getUmidade());
+                if (spinnerTalhao.getSelectedItem() == null) {
+                  Alerta("Erro", "Selecione um talhão!!");
+                } else if (planta.getNome() == null || talhao.getNome() == null || dadosSensor.getStatus() == null) {
+                        Alerta("Erro", "Não existe registro para Data ou Hora selecionada!");
+                } else {
+                    umidadeTermometro.setText("Umidade: " + dadosSensor.getUmidade() + "%");
                     nomePlanta.setText(planta.getNome());
                     textoNome.setText(talhao.getNome());
                     textoCc.setText(talhao.getCc());
@@ -139,20 +140,66 @@ public class RelatorioActivity extends Activity {
                         termometro.setImageResource(R.drawable.umidade_baixa);
                     }
 
-                    GraphView graph = (GraphView) findViewById(R.id.graph);
-
-                    LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                            new DataPoint(0, 1)
-                    });
-                    graph.addSeries(series);
-
-                    Log.e("listasensor", dadosSensor.getDataList().toString() + "----" + dadosSensor.getQntdAguaList());
                     //chama o relatório novamente, pois pode ser inserido outra data e/ou hora
-                    Relatorio();
                 }
-            });
+                Relatorio();
+            }
 
+        });
 
-        }
+        relatorioGastoAgua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String mes = spinnerAgua.getSelectedItem().toString();
+
+                for (int dia = 1; dia <= 31; dia++) {
+
+                    if (dia < 10) {
+                        String data = "0" + dia + "-" + mes + "-2020";
+                        lerDados.lerGastoAgua("1", data);
+                    } else {
+                        String data = dia + "-" + mes + "-2020";
+                        lerDados.lerGastoAgua("1", data);
+                    }
+
+                }
+
+                GraphView graph = findViewById(R.id.graph);
+                if (dadosSensor.getQntdAguaList().size() > 0) {
+                    LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
+                    for (int i = 0; i < dadosSensor.getQntdAguaList().size(); i++) {
+                        Integer dia = Integer.parseInt(dadosSensor.getDataList().get(i).substring(0, 2));
+                        DataPoint point = new DataPoint(dia, dadosSensor.getQntdAguaList().get(i));
+                        series.appendData(point, true, dadosSensor.getQntdAguaList().size());
+                        Log.e("listasensor", dadosSensor.getDataList().toString() + "----" + dadosSensor.getQntdAguaList());
+                    }
+                    dadosSensor.getQntdAguaList().clear();
+                    dadosSensor.getDataList().clear();
+                    graph.addSeries(series);
+                } else {
+                    Alerta("Erro", "Não existe leitura para o mês selecionado!");
+                }
+
+            }
+        });
+
     }
+
+    public void Alerta(String title, String msg){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(RelatorioActivity.this);
+        builder.setTitle(title);
+        builder.setMessage(msg);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Toast.makeText(RelatorioActivity.this, "Ok=", Toast.LENGTH_SHORT).show();
+            }
+        });
+        alerta = builder.create();
+        alerta.show();
+    }
+}
+
+
 

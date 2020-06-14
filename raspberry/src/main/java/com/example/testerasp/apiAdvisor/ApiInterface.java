@@ -5,7 +5,7 @@ import retrofit2.http.GET;
 
 public interface ApiInterface {
 
-    String BASE_URL = "http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/7544/hours/";
+    String BASE_URL = "http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/4782/hours/";
     //List<RespostaServidor> list = new ArrayList<>();
     @GET("72?token=643c73fff94c5b2fe221c5ede99cbeb4")
     Call<classeData> lista();

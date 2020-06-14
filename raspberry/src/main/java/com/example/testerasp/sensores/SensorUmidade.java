@@ -76,7 +76,9 @@ public class SensorUmidade extends Activity {
     }
 
     public int getUmidade() {
-        return umidade;
+
+        Double umid = (-0.3185 * umidade) + 57.778;
+        return umid.intValue();
     }
 
     public void setUmidade(int umidade) {

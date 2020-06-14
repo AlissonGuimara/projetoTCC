@@ -3,7 +3,6 @@ package com.example.testerasp.irrigar;
 public class IrrigarDados {
 
     public static int profundidade_raiz;
-    public static int umidade;
     public static int cc;
     public static int ppm;
     public static String densidade;
@@ -17,14 +16,6 @@ public class IrrigarDados {
 
     public void setProfundidade_raiz(int profundidade_raiz) {
         IrrigarDados.profundidade_raiz = profundidade_raiz;
-    }
-
-    public int getUmidade() {
-        return umidade;
-    }
-
-    public void setUmidade(int umidade) {
-        IrrigarDados.umidade = umidade;
     }
 
     public int getCc() {

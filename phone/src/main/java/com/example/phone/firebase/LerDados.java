@@ -57,11 +57,13 @@ public class LerDados{
         });
 
         //referencia a quantidade de agua
-        qntdAguaReferencia.addValueEventListener(new ValueEventListener() {
+       /* qntdAguaReferencia.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dadosSensor.setQntd_agua(Double.parseDouble(dataSnapshot.getValue().toString()));
-                Log.e("agua", "---" + dadosSensor.getQntd_agua());
+                if(dataSnapshot.exists()) {
+                    dadosSensor.setQntd_agua(Double.parseDouble(dataSnapshot.getValue().toString()));
+                    Log.e("agua", "---" + dadosSensor.getQntd_agua());
+                }
 
             }
 
@@ -69,14 +71,16 @@ public class LerDados{
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
         //referencia a umidade
         umidadeReferencia.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dadosSensor.setUmidade(Integer.parseInt(dataSnapshot.getValue().toString()));
-                Log.e("umidade", "---" + dadosSensor.getUmidade());
+                if(dataSnapshot.exists()) {
+                    dadosSensor.setUmidade(Integer.parseInt(dataSnapshot.getValue().toString()));
+                    Log.e("umidade", "---" + dadosSensor.getUmidade());
+                }
             }
 
             @Override
@@ -89,8 +93,10 @@ public class LerDados{
         statusReferencia.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dadosSensor.setStatus(dataSnapshot.getValue().toString());
-                Log.e("status", "---" + dadosSensor.getStatus());
+                if(dataSnapshot.exists()) {
+                    dadosSensor.setStatus(dataSnapshot.getValue().toString());
+                    Log.e("status", "---" + dadosSensor.getStatus());
+                }
             }
 
             @Override
@@ -103,7 +109,9 @@ public class LerDados{
         areaReferencia.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                talhao.setArea(dataSnapshot.getValue().toString());
+                if(dataSnapshot.exists()) {
+                    talhao.setArea(dataSnapshot.getValue().toString());
+                }
             }
 
             @Override
@@ -116,7 +124,9 @@ public class LerDados{
         ccReferencia.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                talhao.setCc(dataSnapshot.getValue().toString());
+                if(dataSnapshot.exists()) {
+                    talhao.setCc(dataSnapshot.getValue().toString());
+                }
             }
 
             @Override
@@ -129,7 +139,9 @@ public class LerDados{
         nomeReferencia.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                talhao.setNome(dataSnapshot.getValue().toString());
+                if(dataSnapshot.exists()) {
+                    talhao.setNome(dataSnapshot.getValue().toString());
+                }
             }
 
             @Override
@@ -142,7 +154,9 @@ public class LerDados{
         ppmReferencia.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                talhao.setPpm(dataSnapshot.getValue().toString());
+                if(dataSnapshot.exists()) {
+                    talhao.setPpm(dataSnapshot.getValue().toString());
+                }
             }
 
             @Override
@@ -220,15 +234,13 @@ public class LerDados{
                 if(dataSnapshot.exists()){
                     for(DataSnapshot s: dataSnapshot.getChildren()){
                         soma = soma + Double.parseDouble(s.child("qntd_agua").getValue().toString());
+                        //dadosSensor.setQntd_agua(Double.parseDouble(s.child("qntd_agua").getValue().toString()));
                 }
                     datas.add(data);
                     somas.add(soma);
 
-                    //le a data e a qntd de agua, para depois ler no relatorio//
                     dadosSensor.setDataList(datas);
                     dadosSensor.setQntdAguaList(somas);
-                    //Log.e("quantidade agua", data + "--" + soma);
-                    //Log.e("quantidade agua", String.valueOf(datas) + "--"+ somas);
             }
 
             }

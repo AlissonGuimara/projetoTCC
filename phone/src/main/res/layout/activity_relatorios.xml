@@ -40,8 +40,7 @@
                     android:textColor="@color/corTexto"
                     android:textSize="15dp"
                     android:text="Data: "
-                    android:layout_marginLeft="10dp"
-                    >
+                    android:layout_marginLeft="10dp">
                 </TextView>
                 <EditText
                     android:layout_width="80dp"
@@ -232,18 +231,9 @@
 
                 </LinearLayout>
 
+
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-               >
-                <com.jjoe64.graphview.GraphView
-                    android:layout_width="match_parent"
-                    android:layout_height="200dip"
-                    android:id="@+id/graph" />
-            </LinearLayout>
 
           <Button
               android:layout_width="match_parent"
@@ -257,7 +247,57 @@
 
           </Button>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selecione o mês: "
+                android:layout_marginTop="10dp"
+                android:textSize="18dp"
+                android:textColor="@color/corTexto">
+
+            </TextView>
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_qntdAgua"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="8dp">
+
+            </Spinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_marginTop="20dp">
+                <com.jjoe64.graphview.GraphView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dip"
+                    android:id="@+id/graph" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Verificar Gasto de Água"
+                    android:textColor="@color/corTextoBotao"
+                    android:background="@color/corBotao"
+                    android:id="@+id/botao_relatorio_agua"
+                    android:layout_marginTop="10dp">
+
+                </Button>
+            </LinearLayout>
+
+
         </LinearLayout>
+
 
     </ScrollView>
 

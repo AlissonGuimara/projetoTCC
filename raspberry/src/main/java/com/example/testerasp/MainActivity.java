@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
                 if (precipitacao == null || umidade == null) {
                     SalvarPrevisaoEUmidade();
                 } else {
-                   Irrigacao(20, precipitacao);
+                   Irrigacao(umidade, precipitacao);
                 }
             }
 
@@ -71,7 +71,7 @@ public class MainActivity extends Activity {
 
     // desenvolver metodo que pega dados para irrigação
     //pega os dados da CC, PPM e densidade cadastrado no talhão, junto com a profundidade da raiz cadastrada na planta
-    //é passado por parametro a umidade e precipitação para 3 dias
+    //é recebido por parametro a umidade e precipitação para 3 dias
     //com estes dados é montado a lógica para irrigar ou não, e é salvo os dados no firebase no nó do sensor
     public void Irrigacao(final Integer umidade, final Double precipitacao ){
 
@@ -89,11 +89,21 @@ public class MainActivity extends Activity {
                     Double diferenca_umidade = Double.parseDouble(String.valueOf(irrigarDados.getCc() - umidade));
                     Double qntd_agua = (diferenca_umidade / 10) * Double.parseDouble(irrigarDados.getDensidade()) *
                             Double.parseDouble(String.valueOf(irrigarDados.getProfundidade_raiz()));
+                    Log.e("qntd agua", qntd_agua.toString());
 
-                    if(umidade <= irrigarDados.getPpm()){
+                    if(umidade <= irrigarDados.getPpm() + 1){
                         salvarDados.Salvar(umidade, qntd_agua, "ligada");
                     }
                     else if(precipitacao == 0.0 ){
+                        salvarDados.Salvar(umidade, qntd_agua, "ligada");
+                    }
+                    else if(precipitacao >= qntd_agua){
+                        salvarDados.Salvar(umidade, 0.0, "desligada");
+                    }
+                    else if(precipitacao >= (qntd_agua / 5)){
+                        salvarDados.Salvar(umidade, 0.0, "desligada");
+                    }
+                    else{
                         salvarDados.Salvar(umidade, qntd_agua, "ligada");
                     }
 
