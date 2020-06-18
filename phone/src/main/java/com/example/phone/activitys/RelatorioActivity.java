@@ -22,8 +22,8 @@ import com.example.phone.metodos.DadosSensor;
 import com.example.phone.metodos.Planta;
 import com.example.phone.metodos.Talhao;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -46,6 +46,7 @@ public class RelatorioActivity extends Activity {
     private TextView area;
     private TextView nomePlanta;
     private AlertDialog alerta;
+    private TextView totalDeAgua;
 
     DadosSensor dadosSensor = new DadosSensor();
     LerDados lerDados = new LerDados();
@@ -71,6 +72,7 @@ public class RelatorioActivity extends Activity {
         textoStatus = findViewById(R.id.text_status);
         nomePlanta = findViewById(R.id.text_planta);
         area = findViewById(R.id.text_area);
+        totalDeAgua = findViewById(R.id.totalAgua);
 
         // data/hora atual
         LocalDateTime agora = LocalDateTime.now();
@@ -97,7 +99,6 @@ public class RelatorioActivity extends Activity {
         spinnerAgua.setAdapter(spinnerAdapter);
 
         Relatorio();
-
     }
 
     //implementa todos os relatorios da view
@@ -151,36 +152,43 @@ public class RelatorioActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                String mes = spinnerAgua.getSelectedItem().toString();
+                        String mes = spinnerAgua.getSelectedItem().toString();
+                        Double totalAgua =0.0;
 
                 for (int dia = 1; dia <= 31; dia++) {
 
-                    if (dia < 10) {
-                        String data = "0" + dia + "-" + mes + "-2020";
-                        lerDados.lerGastoAgua("1", data);
-                    } else {
-                        String data = dia + "-" + mes + "-2020";
-                        lerDados.lerGastoAgua("1", data);
-                    }
+                            if (dia < 10) {
+                                String data = "0" + dia + "-" + mes + "-2020";
+                                lerDados.lerGastoAgua("1", data);
+                            } else {
+                                String data = dia + "-" + mes + "-2020";
+                                lerDados.lerGastoAgua("1", data);
+                            }
 
-                }
+                        }
 
-                GraphView graph = findViewById(R.id.graph);
-                if (dadosSensor.getQntdAguaList().size() > 0) {
-                    LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
-                    for (int i = 0; i < dadosSensor.getQntdAguaList().size(); i++) {
-                        Integer dia = Integer.parseInt(dadosSensor.getDataList().get(i).substring(0, 2));
-                        DataPoint point = new DataPoint(dia, dadosSensor.getQntdAguaList().get(i));
-                        series.appendData(point, true, dadosSensor.getQntdAguaList().size());
-                        Log.e("listasensor", dadosSensor.getDataList().toString() + "----" + dadosSensor.getQntdAguaList());
-                    }
-                    dadosSensor.getQntdAguaList().clear();
-                    dadosSensor.getDataList().clear();
-                    graph.addSeries(series);
-                } else {
-                    Alerta("Erro", "Não existe leitura para o mês selecionado!");
-                }
-
+                        GraphView graph = findViewById(R.id.graph);
+                        graph.getViewport().setXAxisBoundsManual(true);
+                        graph.getViewport().setMinX(1);
+                        graph.getViewport().setMaxX(31);
+                        BarGraphSeries<DataPoint> series = new BarGraphSeries<>();
+                        if (dadosSensor.getQntdAguaList().size() > 0) {
+                            for (int i = 0; i < dadosSensor.getQntdAguaList().size(); i++) {
+                                Integer dia = Integer.parseInt(dadosSensor.getDataList().get(i).substring(0, 2));
+                                totalAgua = totalAgua + dadosSensor.getQntdAguaList().get(i);
+                                DataPoint point = new DataPoint(dia, dadosSensor.getQntdAguaList().get(i));
+                                series.appendData(point, true, 31);
+                                Log.e("listasensor", dadosSensor.getDataList().toString() + "----" + dadosSensor.getQntdAguaList());
+                            }
+                            dadosSensor.getQntdAguaList().clear();
+                            dadosSensor.getDataList().clear();
+                            graph.addSeries(series);
+                            series.setSpacing(50);
+                            totalDeAgua.setText(String.valueOf(totalAgua.intValue()));
+                        }
+                        else {
+                            Alerta("Erro", "Não existe leitura para o mês selecionado!");
+                        }
             }
         });
 

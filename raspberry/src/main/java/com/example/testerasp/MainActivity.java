@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
                 });
             }
 
-        },0, 6000);
+        },0, 10000);
 
     }
 

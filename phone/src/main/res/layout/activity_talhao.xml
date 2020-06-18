@@ -42,7 +42,8 @@
                 <EditText
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/texto_idCadastrar">
+                    android:id="@+id/texto_idCadastrar"
+                    android:inputType="number">
                 </EditText>
 
             </LinearLayout>
@@ -88,7 +89,8 @@
                 <EditText
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/texto_areaCadastrar">
+                    android:id="@+id/texto_areaCadastrar"
+                    android:inputType="numberDecimal">
                 </EditText>
 
             </LinearLayout>
@@ -111,7 +113,8 @@
                 <EditText
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/texto_ppmCadastrar">
+                    android:id="@+id/texto_ppmCadastrar"
+                    android:inputType="number">
                 </EditText>
 
             </LinearLayout>
@@ -134,7 +137,8 @@
                 <EditText
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/texto_ccCadastrar">
+                    android:id="@+id/texto_ccCadastrar"
+                    android:inputType="number">
                 </EditText>
 
             </LinearLayout>
@@ -157,7 +161,8 @@
               <EditText
                   android:layout_width="100dp"
                   android:layout_height="wrap_content"
-                  android:id="@+id/texto_densidade">
+                  android:id="@+id/texto_densidade"
+                  android:inputType="numberDecimal">
               </EditText>
 
           </LinearLayout>
