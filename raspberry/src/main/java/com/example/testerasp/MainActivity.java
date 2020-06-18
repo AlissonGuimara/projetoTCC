@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.testerasp.apiAdvisor.LerPrevisao;
 import com.example.testerasp.firebase.LerDados;
 import com.example.testerasp.firebase.SalvarDados;
+import com.example.testerasp.irrigar.Irrigacao;
 import com.example.testerasp.irrigar.IrrigarDados;
 import com.example.testerasp.sensores.SensorUmidade;
 
@@ -21,6 +22,7 @@ public class MainActivity extends Activity {
     private SalvarDados salvarDados = new SalvarDados();
     private LerDados lerDados = new LerDados();
     private IrrigarDados irrigarDados = new IrrigarDados();
+    private Irrigacao irrigacao = new Irrigacao();
     private Double precipitacao = null;
     private Integer umidade = null;
 
@@ -60,7 +62,11 @@ public class MainActivity extends Activity {
                 if (precipitacao == null || umidade == null) {
                     SalvarPrevisaoEUmidade();
                 } else {
-                   Irrigacao(umidade, precipitacao);
+                    try {
+                        Irrigacaos(umidade, precipitacao);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -73,7 +79,7 @@ public class MainActivity extends Activity {
     //pega os dados da CC, PPM e densidade cadastrado no talhão, junto com a profundidade da raiz cadastrada na planta
     //é recebido por parametro a umidade e precipitação para 3 dias
     //com estes dados é montado a lógica para irrigar ou não, e é salvo os dados no firebase no nó do sensor
-    public void Irrigacao(final Integer umidade, final Double precipitacao ){
+    public void Irrigacaos(final Integer umidade, final Double precipitacao ) throws IOException {
 
                 while(irrigarDados.getCc() == 0 || irrigarDados.getPpm() == 0 || irrigarDados.getProfundidade_raiz() == 0
                 || irrigarDados.getDensidade() == null){
@@ -93,9 +99,11 @@ public class MainActivity extends Activity {
 
                     if(umidade <= irrigarDados.getPpm() + 1){
                         salvarDados.Salvar(umidade, qntd_agua, "ligada");
+                        irrigacao.LigarBomba(qntd_agua);
                     }
                     else if(precipitacao == 0.0 ){
                         salvarDados.Salvar(umidade, qntd_agua, "ligada");
+                        irrigacao.LigarBomba(qntd_agua);
                     }
                     else if(precipitacao >= qntd_agua){
                         salvarDados.Salvar(umidade, 0.0, "desligada");
@@ -105,6 +113,7 @@ public class MainActivity extends Activity {
                     }
                     else{
                         salvarDados.Salvar(umidade, qntd_agua, "ligada");
+                        irrigacao.LigarBomba(qntd_agua);
                     }
 
                 }
