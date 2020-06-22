@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class Irrigacao {
 
-    private static String pinBomba = "BCM19";
+    //private String pinBomba = "BCM19";
     private Double VazaoPM = 2.0;
     private Double AreaM2 = 0.5;
     private long tempo;
@@ -24,24 +24,40 @@ public class Irrigacao {
         Log.e("tempo", "tempo: " + tempo);
 
         manager = PeripheralManager.getInstance();
-        gpioBomba = manager.openGpio(pinBomba);
+        gpioBomba = manager.openGpio("BCM19");
         gpioBomba.setDirection(Gpio.DIRECTION_OUT_INITIALLY_HIGH);
         gpioBomba.setActiveType(Gpio.ACTIVE_HIGH);
 
         Thread myThread = new Thread(new Runnable() {
             @Override
             public void run() {
-
                 try {
-                    gpioBomba.setActiveType(Gpio.ACTIVE_LOW);
-                    Thread.sleep(tempo);
+                    gpioBomba.setValue(false);
+                    Log.e("bomba", "a bomba esta ligada");
+                    Thread.sleep(10000);
                 } catch (InterruptedException | IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    gpioBomba.setValue(true);
+                    Log.e("bomba", "a bomba esta desligada");
+                    close();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
         myThread.start();
-        gpioBomba.setActiveType(Gpio.ACTIVE_HIGH);
+    }
+
+    public void close() {
+        try {
+            if (gpioBomba != null) gpioBomba.close();
+        } catch (IOException e) {
+            Log.e("close", "error on closing GPIO");
+        } finally {
+            gpioBomba = null;
+        }
     }
 
 }
