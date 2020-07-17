@@ -11,7 +11,7 @@ public class Irrigacao {
 
     //private String pinBomba = "BCM19";
     private Double VazaoPM = 2.0;
-    private Double AreaM2 = 0.5;
+    private Double AreaM2 = 0.5; // EM SITUAÇÃO REAL, AQUI DEVE SER PEGO A ÁREA SALVA NO BANCO DE DADOS
     private long tempo;
 
     public PeripheralManager manager = PeripheralManager.getInstance();
@@ -34,7 +34,7 @@ public class Irrigacao {
                 try {
                     gpioBomba.setValue(false);
                     Log.e("bomba", "a bomba esta ligada");
-                    Thread.sleep(10000);
+                    Thread.sleep(tempo);
                 } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
                 }

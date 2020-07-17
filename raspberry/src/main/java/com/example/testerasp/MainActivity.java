@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
                 });
             }
 
-        },0, 20000);
+        },0, 3600000);
 
     }
 
@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
                             Double.parseDouble(String.valueOf(irrigarDados.getProfundidade_raiz()));
                     Log.e("qntd agua", qntd_agua.toString());
 
-                    if(umidade <= irrigarDados.getPpm() + 1){
+                    if(umidade <= irrigarDados.getPpm()){
                         salvarDados.Salvar(umidade, qntd_agua, "ligada");
                         irrigacao.LigarBomba(qntd_agua);
                     }
@@ -105,10 +105,8 @@ public class MainActivity extends Activity {
                         salvarDados.Salvar(umidade, qntd_agua, "ligada");
                         irrigacao.LigarBomba(qntd_agua);
                     }
-                    else if(precipitacao >= qntd_agua){
-                        salvarDados.Salvar(umidade, 0.0, "desligada");
-                    }
-                    else if(precipitacao >= (qntd_agua / 5)){
+
+                    else if(precipitacao >= (qntd_agua / 4)){
                         salvarDados.Salvar(umidade, 0.0, "desligada");
                     }
                     else{
